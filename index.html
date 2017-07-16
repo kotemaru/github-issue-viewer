@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<link href="css/style.css" rel="stylesheet">
+		<script src="js/jquery-3.2.1.js"></script>
+
+
+	<link rel="stylesheet" href="css/BorderLayout.css" />
+	<link rel="stylesheet" href="css/ExTable.css" />
+	<link rel="stylesheet" href="css/Font.css" />
+	<link rel="stylesheet" href="css/Dialog.css" />
+	<link rel="stylesheet" href="css/PopupMenu.css" />
+	<link rel="stylesheet" href="css/ZIndex.css" />
+	<link rel="stylesheet" href="css/MyMine.css" />
+	<link rel="stylesheet" href="css/Control.css" />
+	<link rel="stylesheet" href="css/Ticket.css" />
+
+	<script src="js/Common.js" ></script>
+	<script src="js/Storage.js" ></script>
+	<script src="js/Dialog.js" ></script>
+	<script src="js/PopupMenu.js" ></script>
+	<script src="js/CheckButton.js" ></script>
+	<script src="js/PulldownButton.js" ></script>
+	<script src="js/Balloon.js" ></script>
+
+	<script src="js/BorderLayout.js" ></script>
+	<script src="js/ExTable.js" ></script>
+	<script src="js/TicketTray.js" ></script>
+
+		<script src="js/Auth.js"></script>
+		<script src="js/Repo.js"></script>
+		<script src="js/foreground.js"></script>
+
+    </head>
+	<body>
+	
+		
+	<!-- ========= Main Panel =========================================== -->
+	<section class="BorderLayoutMain">
+		<div id="ticketTray" class="ExTable"></div>
+	</section>
+
+	<!-- ========= Left Side Panel =========================================== -->
+	<section class="BorderLayoutLeft">
+		<header>フォルダ
+			<img class="Button" src="img/led24/pencil.png" id="editFolderButton"
+				onclick="Dialog.openEditFolder()" alt="フォルダ編集"/>
+			<img class="Button" src="img/led24/cross.png" id="delFolderButton"
+				onclick="Folders.delFolderConfirm()" alt="フォルダ削除"/>
+			<img class="Button" src="img/led24/add.png"
+				onclick="Dialog.openAddFolder()" alt="フォルダ追加"/>
+		</header>
+		<section id="folders">
+		</section>
+
+		<span class="BorderLayoutHandle" ></span>
+	</section>
+
+	<!-- ========= Right Side Panel
+	<section class="BorderLayoutRight">
+		<span class="BorderLayoutHandle"  ></span>
+	</section>
+	-->
+
+	<!-- ========= Header Panel =========================================== -->
+	<header class="BorderLayoutHeader" >
+		<img id="logoImage" class="Button" src="icon/icon-128.png" width=48
+			onclick="Dialog.open('#abortDialog')"
+			alt="MyMineについて"/>
+		<div id="buttons">
+			<select id="milestoneSelector" ></select>
+			<img id="milestoneButton" class="Button" src="img/led24/clock.png" alt="マイルストーン"/>
+			<img id="loginButton" class="Button" src="img/led24/door_in.png" alt="ログイン"/>
+			<img id="issuesButton" class="Button" src="img/led24/page_refresh.png" alt="refresh"/>
+			<img id="test" class="Button" src="img/led24/page_refresh.png" alt="test"/>
+			<img id="settingsButton" class="Button" src="img/led24/cog.png" alt="環境設定" />
+		</div>
+	</header>
+
+	<!-- ========= Footer Panel
+	<footer class="BorderLayoutFooter" >
+		<span class="BorderLayoutHandle"  ></span>
+	</footer>
+	-->
+
+	<!-- ======================= Dialog =============================== -->
+	<div id="dialogPanel" class="DialogPanel" >
+		<div class="DialogMask" > </div>
+		<!-- Include -->
+	</div>
+
+	<!-- ======================= Popup menu =============================== -->
+
+	<div id="iconSelectMenu" class="PopupMenu">
+	</div>
+
+
+	<!-- ======================= Waiting =============================== -->
+	<div id="waiting">
+		<img src="img/waiting.gif" />
+		<div id="progressBar"><div></div></div>
+	</div>
+	<!-- ======================= Balloon =============================== -->
+	<div id="balloon" ></div>
+
+	<!-- ================ Template =================================== -->
+	<div class="Template">
+
+		<article id="templ_folder" class="Folder"></article>
+
+		<div id="templ_project">
+			<input name="redmineProjectName" size=50/>
+			<input name="redmineProjectId" size=4/>
+		</div>
+
+		<div id="templ_pulldownButton">
+			<span class="PulldownButton">
+				<img src="?" /><img	class="PulldownButtonMark" src="img/pulldown-mark.png" />
+				<div class="PopupMenu">
+					<div class="PopupMenuItem" data-value="val">表示名</div>
+				</div>
+			</span>
+		</div>
+
+		<div id="templ_kanban" class="Kanban">
+			<div>
+				<img id="tracker" src="img/led24/page.png" height="12px"/>
+				#<span id="ticketId"></span>
+				<img id="assignedIcon" src="img/led24/user.png" height="12px"/>
+				<span id="assigned"></span>
+			</div>
+			<div id="title"></div>
+		</div>
+
+
+	</div>
+
+	</body>
+</html>

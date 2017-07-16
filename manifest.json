@@ -1,0 +1,19 @@
+{
+	"manifest_version": 2,
+	"name": "github issues",
+	"description": "github issue viewer",
+	"version": "0.0.1",
+	"app": {
+		"background": {
+			"scripts": ["js/background.js"]
+		}
+	},
+	"icons": {
+		"128": "icon/icon-128.png"
+	},
+	"permissions": [
+		"webview","storage", "clipboardWrite",
+		"clipboardRead"
+	]
+}
+
