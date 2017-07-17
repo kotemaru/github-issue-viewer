@@ -7,7 +7,8 @@ function Repo(){}
 	_class.onLoadIssues = function(issues) {}
 	_class.settings = {
 		owner : "",
-		project : ""
+		project : "",
+		progress: {}
 	};
 
 	function getOwnerProject() {
@@ -38,14 +39,14 @@ function Repo(){}
 			}
 		});
 	}
-
+	
 	function loadIssues(milestone, onload) {
-
-		if (milestone != "") {
+		var q = getIssueQuery();
+		if (milestone != "" && milestone != "*") {
 			q = q+"+milestone:\""+milestone+"\"";
 		}
 		$.ajax({
-			type: "GET", url:"https://api.github.com/search/issues?q="+getIssueQuery()+"&sort=updated&page=1&per_page=100",
+			type: "GET", url:"https://api.github.com/search/issues?q="+q+"&sort=updated&page=1&per_page=100",
 			beforeSend: Auth.setupHeader,
 
 			dataType: "json",
@@ -57,7 +58,20 @@ function Repo(){}
 			}
 		});
 	}
-
+	
+	_class.getProgress = function(item) {
+		if (item.state == "closed") return 100;
+		if (item.labels == null || item.labels.length == 0) return 0;
+		for (var i=0;i<item.labels.length; i++) {
+			var name = item.labels[i].name;
+			for (var key in _class.settings.progress) {
+				var progress = _class.settings.progress[key];
+				console.log(name, progress);
+				if (name == progress.tag) return progress.per;
+			}
+		}
+		return 0;
+	}
 	_class.getGithubLink = function(id) {
 		return "https://github.com/"+getOwnerProject()+"/issues/"+id;
 	}
@@ -68,7 +82,7 @@ function Repo(){}
 		Storage.put("Repo", _class.settings);
 	}
 	_class.load = function() {
-		Storage.get("Repo", {}, function(value){
+		Storage.get("Repo", {owner:"", project:""}, function(value){
 			_class.settings = value;
 		});
 	}

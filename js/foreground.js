@@ -16,7 +16,7 @@ function onLoadIssue(json) {
 			id:				item.number, 		// 番号
 			assigned_to:	{name:assigned}, 	// 担当者
 			updated_on:		item.updated_at, 	// 更新日
-			done_ratio:		50, 				// 進捗
+			done_ratio:		Repo.getProgress(item), 	// 進捗
 			subject:		item.title
 		};
 		issues.push(issue);
@@ -93,15 +93,16 @@ function init() {
 		header:{size:60, resizable:false},
 	}).load().refresh();
 
-	if (!Auth.isLogin()) {
-		Dialog.show("#loginDialog", login);
-	}
+//	if (!Auth.isLogin()) {
+//		Dialog.show("#loginDialog", login);
+//	}
 	
 	$("#loginButton").bind('click',function(){
 		Dialog.show("#loginDialog", login);
 	});
 	$("#issuesButton").bind('click',function(){
-		Repo.loadIssues("", onLoadIssue);
+		var $sel = $("#milestoneSelector");
+		Repo.loadIssues($sel.val(), onLoadIssue);
 	});
 	$("#milestoneButton").bind('click',function(){
 		Repo.loadMilestone(onLoadMilestones);

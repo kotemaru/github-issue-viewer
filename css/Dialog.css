@@ -177,3 +177,12 @@ input[name='redmineCustomQuery'], #redmineCustomQuery{
 	width: 700px;
 	//overflow-y: scroll;
 }
+
+#progressSettingTable > tbody > tr > td:nth-child(2) > input {
+	text-align: right;
+}
+
+
+
+
+

@@ -6,12 +6,33 @@
 		<nobr>Setting</nobr>
 	</h3>
 	<div>
-		<h4>Repository</h4>
-		<div style="margin-left: 1em;">
-			<table>
-				<tr><td>Owner:  <td><input id="owner" data-path="Repo.settings.owner" size="32"/></tr>
-				<tr><td>Project:<td><input id="project" data-path="Repo.settings.project" size="32"/></tr>
-			</table>
+		<div style="height:100%; padding-bottom: 32px;">
+			<div style="overflow-y: scroll;height:100%; ">
+			<h4>Repository</h4>
+			<div style="margin-left: 1em;">
+				<table>
+					<tr><td>Owner:  <td><input id="owner" data-path="Repo.settings.owner" size="32"/></tr>
+					<tr><td>Project:<td><input id="project" data-path="Repo.settings.project" size="32"/></tr>
+				</table>
+			</div>
+			<br>
+			<h4>Progress</h4>
+			<div style="margin-left: 1em;">
+				<table id="progressSettingTable">
+					<tr><td>タグ名<td>進捗率</tr>
+					<tr><td><input id="progress_1" data-path="Repo.settings.progress.p1.tag" size="32"/><td><input id="progress_1" data-path="Repo.settings.progress.p1.per" size="2"/>%</tr>
+					<tr><td><input id="progress_2" data-path="Repo.settings.progress.p2.tag" size="32"/><td><input id="progress_2" data-path="Repo.settings.progress.p2.per" size="2"/>%</tr>
+					<tr><td><input id="progress_3" data-path="Repo.settings.progress.p3.tag" size="32"/><td><input id="progress_3" data-path="Repo.settings.progress.p3.per" size="2"/>%</tr>
+					<tr><td><input id="progress_4" data-path="Repo.settings.progress.p4.tag" size="32"/><td><input id="progress_4" data-path="Repo.settings.progress.p4.per" size="2"/>%</tr>
+					<tr><td><input id="progress_5" data-path="Repo.settings.progress.p5.tag" size="32"/><td><input id="progress_5" data-path="Repo.settings.progress.p5.per" size="2"/>%</tr>
+					<tr><td><input id="progress_6" data-path="Repo.settings.progress.p6.tag" size="32"/><td><input id="progress_6" data-path="Repo.settings.progress.p6.per" size="2"/>%</tr>
+					<tr><td><input id="progress_7" data-path="Repo.settings.progress.p7.tag" size="32"/><td><input id="progress_7" data-path="Repo.settings.progress.p7.per" size="2"/>%</tr>
+					<tr><td><input id="progress_8" data-path="Repo.settings.progress.p8.tag" size="32"/><td><input id="progress_8" data-path="Repo.settings.progress.p8.per" size="2"/>%</tr>
+					<tr><td><input id="progress_9" data-path="Repo.settings.progress.p9.tag" size="32"/><td><input id="progress_9" data-path="Repo.settings.progress.p9.per" size="2"/>%</tr>
+					<tr><td><input id="progress_10" data-path="Repo.settings.progress.p10.tag" size="32"/><td><input id="progress_10" data-path="Repo.settings.progress.p10.per" size="2"/>%</tr>
+				</table>
+			</div>
+			</div>
 		</div>
 		<div class="DialogButtons">
 			<span id="dialogOK">Save</span>

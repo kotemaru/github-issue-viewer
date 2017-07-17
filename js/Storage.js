@@ -15,6 +15,7 @@ function Storage(){this.initialize.apply(this, arguments)};
 //		if (data == null) return defo;
 //		return JSON.parse(data);
 		chrome.storage.local.get(name, function (value) {
+			if (value[name] == null) return defo;
 			callback(value[name]);
 		});
 	}

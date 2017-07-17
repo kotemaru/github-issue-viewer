@@ -64,7 +64,15 @@ body > section
 
 .Template {display: none;}
 
-
-
+#milestoneSelector {
+	width: 200px;
+	float: left;
+}
+#milestoneButton, #issuesButton {
+	float: left;
+}
+#loginButton, #settingsButton {
+	float: right;
+}
 
 

@@ -43,6 +43,7 @@ function Dialog(){this.initialize.apply(this, arguments)};
 		var parts = path.split(".");
 		for (var i=0;i<parts.length;i++){
 			cur = cur[parts[i]];
+			if (cur == null) return null;
 		}
 		return cur;
 	}
@@ -51,6 +52,7 @@ function Dialog(){this.initialize.apply(this, arguments)};
 		var cur = window;
 		var parts = path.split(".");
 		for (var i=0;i<parts.length-1;i++){
+			if (cur[parts[i]] == null) cur[parts[i]] = {};
 			cur = cur[parts[i]];
 		}
 		cur[parts[parts.length-1]] = val;
