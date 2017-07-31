@@ -20,21 +20,28 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 			$ticket[0].dataset.subject = issue.subject;
 //			$ticket.toggleClass(TicketUnChecked, !TicketPool.isChecked(issue.id));
 		},
-		project:	function($elem,issue) {$elem.html(name(issue.project));},
-		tracker:	function($elem,issue) {$elem.html(name(issue.tracker));},
-		priority:	function($elem,issue) {$elem.html(name(issue.priority));},
+//		project:	function($elem,issue) {$elem.html(name(issue.project));},
+//		tracker:	function($elem,issue) {$elem.html(name(issue.tracker));},
+//		priority:	function($elem,issue) {$elem.html(name(issue.priority));},
 		assigned_to:function($elem,issue) {$elem.html(name(issue.assigned_to));},
-		author:     function($elem,issue) {$elem.html(name(issue.author));},
+//		author:     function($elem,issue) {$elem.html(name(issue.author));},
 		subject:	function($elem,issue) {$elem.text(issue.subject);},
 
-		start_date:	function($elem,issue) {$elem.html(toYYMMDD(issue.start_date));},
-		due_date:	function($elem,issue) {$elem.html(toYYMMDD(issue.due_date));},
+//		start_date:	function($elem,issue) {$elem.html(toYYMMDD(issue.start_date));},
+//		due_date:	function($elem,issue) {$elem.html(toYYMMDD(issue.due_date));},
 		updated_on:	function($elem,issue) {$elem.html(toYYMMDD(issue.updated_on));},
 
 		done_ratio: function($elem,issue) {
 			$elem.html("<div class='RateBar'><span></span></div>");
 			$elem.find(">div>span").css("width",issue.done_ratio+"%");
-		}
+		},
+		label:		function($elem,issue) {
+			//console.log("label bug:",issue.labels.indexOf("bug"), issue.labels, );
+			if (issue.labels["bug"] !== undefined) {
+				$elem.html("<img src='/img/led24/bug.png'/>");
+			}
+		},
+
 	};
 	var COMPS = {
 		id:			function(a,b) {console.log(a,b);
@@ -50,7 +57,8 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		due_date:	function(a,b){return compDate(a,b,"due_date");},
 		updated_on:	function(a,b){return compDate(a,b,"updated_on");},
 
-		done_ratio: function(a,b){return(a.done_ratio-b.done_ratio);}
+		done_ratio: function(a,b){return(a.done_ratio-b.done_ratio);},
+		label: 		function(a,b){return 0 ;},
 	};
 	function compId(a,b,key) {
 		var A = a[key]?a[key].id:-1;
@@ -72,6 +80,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	var COLUMN_METAS =[
 		{title:"番号",   		width:36, setter:SETTERS.id, comparator:COMPS.id,		style:{textAlign:"right"}},
 //		{title:"プロジェクト", 	width:80, setter:SETTERS.project, 	 comparator:COMPS.project },
+		{title:"タグ", 			width:32, setter:SETTERS.label,	 	 comparator:COMPS.label },
 //		{title:"トラッカー",	width:70, setter:SETTERS.tracker, 	 comparator:COMPS.tracker },
 //		{title:"優先度", 		width:48, setter:SETTERS.priority, 	 comparator:COMPS.priority },
 		{title:"担当者", 		width:97, setter:SETTERS.assigned_to, comparator:COMPS.assigned_to },
@@ -86,6 +95,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	var SORT_NAME = [
 	    "id",
 //		"project",
+		"label",
 //		"tracker",
 //		"priority",
 		"assigned_to",
@@ -279,6 +289,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	}
 
 	function onScroll() {
+	/*
 		var bottom = this.scrollTop+this.clientHeight;
 		//console.log(this.scrollTop, this.scrollHeight);
 		if (Folders.isCurrentInbox() && bottom >= this.scrollHeight) {
@@ -291,6 +302,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 				},1);
 			});
 		}
+		*/
 	}
 
 

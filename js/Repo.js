@@ -59,16 +59,39 @@ function Repo(){}
 		});
 	}
 	
-	_class.getProgress = function(item) {
-		if (item.state == "closed") return 100;
-		if (item.labels == null || item.labels.length == 0) return 0;
+	_class.__getLabels = function(item) {
+		var labels = [];
+		if (item.labels == null || item.labels.length == 0) return labels;
 		for (var i=0;i<item.labels.length; i++) {
 			var name = item.labels[i].name;
 			for (var key in _class.settings.progress) {
 				var progress = _class.settings.progress[key];
-				console.log(name, progress);
-				if (name == progress.tag) return progress.per;
+				if (name != progress.tag) {
+					labels.push(name);
+					break;
+				}
 			}
+		}
+		console.log("getLabels", labels);
+		return labels;
+	}
+	_class.getLabels = function(item) {
+		var labels = {};
+		if (item.labels == null || item.labels.length == 0) return labels;
+		for (var i=0;i<item.labels.length; i++) {
+			labels[item.labels[i].name] = item.labels[i].id;
+		}
+		console.log("getLabels", labels);
+		return labels;
+	}
+	_class.getProgress = function(item, labels) {
+		if (item.state == "closed") return 100;
+		if (labels == null) labels = Repo.getLabels();
+
+		for (var key in _class.settings.progress) {
+			var progress = _class.settings.progress[key];
+			//console.log(name, progress);
+			if (labels[progress.tag] !== undefined) return progress.per;
 		}
 		return 0;
 	}

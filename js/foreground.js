@@ -12,14 +12,18 @@ function onLoadIssue(json) {
 	for (var i=0;i<json.items.length;i++) {
 		var item = json.items[i];
 		var assigned = (item.assignees.length>0) ? item.assignees[0].login : "";
+		var labels = Repo.getLabels(item);
 		var issue = {
 			id:				item.number, 		// 番号
 			assigned_to:	{name:assigned}, 	// 担当者
 			updated_on:		item.updated_at, 	// 更新日
-			done_ratio:		Repo.getProgress(item), 	// 進捗
-			subject:		item.title
+			done_ratio:		Repo.getProgress(item, labels), 	// 進捗
+			subject:		item.title,
+			labels:			labels
 		};
-		issues.push(issue);
+		if (labels["REJECT"] === undefined) {
+			issues.push(issue);
+		}
 	}
 	TicketTray.setData(issues);
 }
