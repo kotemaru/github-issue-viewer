@@ -1,0 +1,16 @@
+
+{
+	"owner":"ns-gadget",
+	"project":"dTV-Android",
+	"labels": {
+		"[ready to implement]" :	{progress: 5},
+		"[doing]":					{progress: 20},
+		"[ready to review]":		{progress: 50},
+		"[ready to merge]":			{progress: 70},
+		"[in progress]":			{progress: 80},
+		"[QA]":						{progress: 90},
+		
+		"bug":						{icon:"img/led24/bug.png"},
+		"immediately":				{icon:"img/led24/bomb.png"},
+	}
+}

@@ -107,6 +107,7 @@ function Repo(){}
 	_class.load = function() {
 		Storage.get("Repo", {owner:"", project:""}, function(value){
 			_class.settings = value;
+			console.log(JSON.stringify(value));
 		});
 	}
 	_class.openIssue = function(id) {

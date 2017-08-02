@@ -1,7 +1,7 @@
 
 //@Singleton
 function TicketTray(){this.initialize.apply(this, arguments)};
-(function(Class){
+(function(_class){
 	var _TICKET_TRAY    = "#ticketTray";
 	var _TICKET         = "#ticketTray .ExTableRow";
 	var TicketSelect    = "TicketSelect";
@@ -18,7 +18,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 			var $ticket = $elem.parent();
 			$ticket[0].dataset.num = issue.id;
 			$ticket[0].dataset.subject = issue.subject;
-//			$ticket.toggleClass(TicketUnChecked, !TicketPool.isChecked(issue.id));
+//			$ticket.toggle_class(TicketUnChecked, !TicketPool.isChecked(issue.id));
 		},
 //		project:	function($elem,issue) {$elem.html(name(issue.project));},
 //		tracker:	function($elem,issue) {$elem.html(name(issue.tracker));},
@@ -148,7 +148,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		return to2ChStr(date.getMonth()+1)+"/"+to2ChStr(date.getDate());
  	}
 
-	Class.setTickets = function(tickets) {
+	_class.setTickets = function(tickets) {
 		var data = [];
 		for (var k in tickets) {
 			var issue = tickets[k];
@@ -156,7 +156,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		}
 		exTable.data(data);
 	}
-	Class.setTicketNums = function(nums) {
+	_class.setTicketNums = function(nums) {
 		var data = [];
 		for (var i=0; i<nums.length; i++) {
 			data.push(TicketPool.get(nums[i]));
@@ -164,17 +164,17 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		exTable.data(data);
 	}
 
-	Class.sort = function(idx, desc) {
+	_class.sort = function(idx, desc) {
 		return exTable.sort(idx, desc);
 	}
 
-	Class.getSortInfo = function() {
+	_class.getSortInfo = function() {
 		var sortInfo = exTable.getSortInfo();
 		if (sortInfo == null) return null;
 		sortInfo.name = SORT_NAME[sortInfo.index];
 		return sortInfo;
 	}
-	Class.refresh = function() {
+	_class.refresh = function() {
 		return exTable.refresh();
 	}
 
@@ -183,19 +183,19 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 
 	var isDrag = false;
 
-	Class.isDrag = function(b) {
+	_class.isDrag = function(b) {
 		if (b !== undefined) isDrag = b;
 		return isDrag;
 	}
 
-	Class.setDragCursor = function() {
-		$(document.body).css("cursor", Class.getDragCursor(true));
-		$(_Folder).css("cursor", Class.getDragCursor(false));
+	_class.setDragCursor = function() {
+		$(document.body).css("cursor", _class.getDragCursor(true));
+		$(_Folder).css("cursor", _class.getDragCursor(false));
 	}
 
-	Class.getDragCursor = function(isNo) {
+	_class.getDragCursor = function(isNo) {
 		if (isDrag) {
-			var sels = Class.getSelection();
+			var sels = _class.getSelection();
 			var img = (sels.length>=2) ? "tickets":"ticket";
 			if (isNo) img += "-no";
 			return "url(img/"+img+".png) 16 8, pointer";
@@ -204,7 +204,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		}
 	}
 
-	Class.getSelection = function() {
+	_class.getSelection = function() {
 		var selection = [];
 		var tickets = $(_TicketSelect);
 		for (var i=0; i<tickets.length; i++) {
@@ -212,13 +212,13 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		}
 		return selection;
 	}
-	Class.clearSelection = function() {
-		$(_TicketSelect).removeClass(TicketSelect);
+	_class.clearSelection = function() {
+		$(_TicketSelect).remove_class(TicketSelect);
 	}
-	Class.addSelection = function(elem) {
-		$(elem).addClass(TicketSelect);
+	_class.addSelection = function(elem) {
+		$(elem).add_class(TicketSelect);
 	}
-	Class.hasScrollBar = function() {
+	_class.hasScrollBar = function() {
 		var tray =  $(_TICKET_TRAY+" "+_ExTableBody)[0];
 		return (tray.clientHeight < tray.scrollHeight);
 	}
@@ -228,16 +228,16 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		var draggable = null;
 		var downTime = 0;
 		$(document).on("mousedown",_TICKET,function(ev){
-			Class.isDrag(true);
+			_class.isDrag(true);
 			draggable = this;
 			downTime = new Date().getTime();
 			return false;
 		}).on("mousemove",_TICKET,function(ev){
 			var isClick = (100 > (new Date().getTime() - downTime));
 			if (!isClick && draggable == this) {
-				Class.setDragCursor();
-				if (Class.isDrag()) {
-					Class.addSelection(this);
+				_class.setDragCursor();
+				if (_class.isDrag()) {
+					_class.addSelection(this);
 				}
 			}
 		}).on("mouseout",_TICKET,function(ev){
@@ -247,30 +247,51 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		}).on("mouseup",_TICKET,function(ev){
 			var isClick = (200 > (new Date().getTime() - downTime));
 			if (isClick) {
-				if (!ev.ctrlKey) Class.clearSelection();
-				$(this).toggleClass(TicketSelect);
+				if (!ev.ctrlKey) _class.clearSelection();
+				$(this).toggle_class(TicketSelect);
 				draggable = null;
 			}
 		}).on("dblclick",_TICKET,function(ev){
 			var num = this.dataset.num;
 			//RedMine.openIssue(num);
 			//TicketPool.checked(num);
-			Class.refresh();
+			_class.refresh();
 			//Folders.refresh();
 			window.open(Repo.getGithubLink(num), "_blank");
 		});
 
 		$(document).on("mouseup","body",function(ev){
-			//Class.clearSelection();
+			//_class.clearSelection();
 			// ハンドラが先に実行されるので遅らせる。
 			setTimeout(function(){
 				draggable = null;
-				Class.isDrag(false);
-				Class.setDragCursor();
+				_class.isDrag(false);
+				_class.setDragCursor();
 			}, 10);
 		});
 	}
-
+	
+	_class.onLoadIssue = function(json) {
+		var issues = [];
+		for (var i=0;i<json.items.length;i++) {
+			var item = json.items[i];
+			var assigned = (item.assignees.length>0) ? item.assignees[0].login : "";
+			var labels = Repo.getLabels(item);
+			var issue = {
+				id:				item.number, 		// 番号
+				assigned_to:	{name:assigned}, 	// 担当者
+				updated_on:		item.updated_at, 	// 更新日
+				done_ratio:		Repo.getProgress(item, labels), 	// 進捗
+				subject:		item.title,
+				labels:			labels
+			};
+			if (labels["REJECT"] === undefined) {
+				issues.push(issue);
+			}
+		}
+		TicketTray.setData(issues);
+	}
+	
 	//----------------------------------------------------------------
 	// 初期化
 
@@ -321,11 +342,11 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		$body[0].onscroll = onScroll;
 	})
 
-	Class.setData = function(data) {
+	_class.setData = function(data) {
 		exTable.data(data);
 	}
 
-	Class.clipbordCopy = function(){
+	_class.clipbordCopy = function(){
 		document.oncopy = function(event) {
 			var html = "<table>\n";
 			var tickets = $(_TicketSelect);

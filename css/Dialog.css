@@ -92,53 +92,13 @@
 }
 
 
-#configDialog > div {
+#settingsDialog > div {
 	//border: 1px solid gray;
 	height: 400px;
 	width: 700px;
-	overflow-y: scroll;
+	overflow: none;
 }
 
-
-.ConfigTable {
-	margin: 0 auto;
-	font-size: 14px;
-	border-spacing: 0px;
-	border-bottom: 1px solid lightgray;
-}
-.ConfigTable th {
-	width: 128px;
-	margin-right: 20px;
-	border-top: 1px solid lightgray;
-	font-weight: normal;
-	text-align: right;
-	vertical-align: top;
-	padding: 4px;
-}
-.ConfigTable td {
-	width: 500px;
-	border-top: 1px solid lightgray;
-	padding: 4px;
-	padding-bottom: 20px;
-}
-.ConfigTable  tr  td:nth-child(2) {
-	width: 16px;
-	border-top: 0;
-
-}
-.ConfigTable tr:first-child th {
-	border: 0;
-	font-weight: bold;
-	text-align: left;
-}
-
-input[name='redmineProjectName'], #redmineProjectName{
-	display: inline-block;
-	width: 300px;
-}
-input[name='redmineProjectId'], #redmineProjectId{
-	width: 40px;
-}
 
 #redmineCustomImg {
 	display: inline-block;
@@ -156,27 +116,7 @@ img#redmineCustomImg {
 	vertical-align: middle;
 }
 
-input[name='redmineCustomName'], #redmineCustomName{
-	display: inline-block;
-	width: 200px;
-}
-input[name='redmineCustomQuery'], #redmineCustomQuery{
-	width: 300px;
-}
 
-
-#addFolderDialog > div {
-	//border: 1px solid gray;
-	height: 350px;
-	width: 700px;
-	//overflow-y: scroll;
-}
-#editFolderDialog > div {
-	//border: 1px solid gray;
-	height: 350px;
-	width: 700px;
-	//overflow-y: scroll;
-}
 
 #progressSettingTable > tbody > tr > td:nth-child(2) > input {
 	text-align: right;
