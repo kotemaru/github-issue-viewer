@@ -57,7 +57,11 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		project:	function(a,b){return compId(a,b,"project");},
 		tracker:	function(a,b){return compId(a,b,"tracker");},
 		priority:	function(a,b){return compId(a,b,"priority");},
-		assigned_to:function(a,b){return compName(a,b,"assigned_to");},
+		assigned_to:function(a,b){
+		    var aId = (a.assigned_to.length>0) ? a.assigned_to[0].id : 0;
+		    var bId = (b.assigned_to.length>0) ? b.assigned_to[0].id : 0;
+		    return aId - bId;
+		},
 		author:     function(a,b){return compName(a,b,"author");},
 		subject:	function(a,b){var A=a.subject,B=b.subject;return(A==B?0:(A<B?-1:1));},
 
@@ -303,7 +307,8 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	function toAssigned(assignees) {
 	    var assigned = [];
 	    for (var i=0;i<assignees.length; i++) {
-	        assigned.push({name:assignees[i].login, icon:assignees[i].avatar_url});
+	        var ass = assignees[i];
+	        assigned.push({id:ass.id, name:ass.login, icon:ass.avatar_url});
 	    }
 	    return assigned;
 	}
