@@ -65,7 +65,23 @@ function Common(){this.initialize.apply(this, arguments)};
 		}, 1);
 	}
 
-
+    var imageCache = {};
+    Class.createImage = function(url) {
+        var img = document.createElement('img');
+        if (imageCache[url]) {
+            img.src = imageCache[url];
+        } else {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function(e) {
+                imageCache[url] =  window.URL.createObjectURL(this.response);
+                img.src = imageCache[url];
+            };
+            xhr.send();
+        }
+        return img;
+    }
 })(Common);
 
 

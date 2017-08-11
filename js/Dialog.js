@@ -42,20 +42,25 @@ function Dialog(){this.initialize.apply(this, arguments)};
 		var cur = window;
 		var parts = path.split(".");
 		for (var i=0;i<parts.length;i++){
-			cur = cur[parts[i]];
+			cur = cur[toIntOrStr(parts[i])];
 			if (cur == null) return null;
 		}
 		return cur;
+	}
+	function toIntOrStr(arg) {
+	    if (isNaN(parseInt(arg,10))) return arg;
+	    return parseInt(arg,10);
 	}
 	
 	function setValueFromPath(path, val) {
 		var cur = window;
 		var parts = path.split(".");
 		for (var i=0;i<parts.length-1;i++){
-			if (cur[parts[i]] == null) cur[parts[i]] = {};
-			cur = cur[parts[i]];
+		    var arg = toIntOrStr(parts[i]);
+			if (cur[arg] == null) cur[arg] = {};
+			cur = cur[arg];
 		}
-		cur[parts[parts.length-1]] = val;
+		cur[toIntOrStr(parts[parts.length-1])] = val;
 	}
 	function getValue($input) {
 		if ($input[0].tagName == "IMG") {

@@ -23,7 +23,13 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 //		project:	function($elem,issue) {$elem.html(name(issue.project));},
 //		tracker:	function($elem,issue) {$elem.html(name(issue.tracker));},
 //		priority:	function($elem,issue) {$elem.html(name(issue.priority));},
-		assigned_to:function($elem,issue) {$elem.html(name(issue.assigned_to));},
+    	assigned_to : function($elem, issue) {
+            $elem.html("");
+            for (var i = 0; i < issue.assigned_to.length; i++) {
+                var img = Common.createImage(issue.assigned_to[i].icon);
+                $elem.append(img);
+            }
+        },
 //		author:     function($elem,issue) {$elem.html(name(issue.author));},
 		subject:	function($elem,issue) {$elem.text(issue.subject);},
 
@@ -37,15 +43,17 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		},
 		label:		function($elem,issue) {
 			//console.log("label bug:",issue.labels.indexOf("bug"), issue.labels, );
-			if (issue.labels["bug"] !== undefined) {
-				$elem.html("<img src='/img/led24/bug.png'/>");
+			$elem.html("");
+			for (var key in issue.labels) {
+			    if (issue.labels[key].icon && issue.labels[key].icon != "") {
+                    $elem.append("<img src='"+issue.labels[key].icon+"'/>");
+			    }
 			}
 		},
 
 	};
 	var COMPS = {
-		id:			function(a,b) {console.log(a,b);
-			return a.id-b.id;},
+		id:			function(a,b) {console.log(a,b);return a.id-b.id;},
 		project:	function(a,b){return compId(a,b,"project");},
 		tracker:	function(a,b){return compId(a,b,"tracker");},
 		priority:	function(a,b){return compId(a,b,"priority");},
@@ -58,7 +66,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		updated_on:	function(a,b){return compDate(a,b,"updated_on");},
 
 		done_ratio: function(a,b){return(a.done_ratio-b.done_ratio);},
-		label: 		function(a,b){return 0 ;},
+		label: 		function(a,b){return Repo.getLabelSortOrder(a.labels) - Repo.getLabelSortOrder(b.labels);},
 	};
 	function compId(a,b,key) {
 		var A = a[key]?a[key].id:-1;
@@ -275,11 +283,12 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		var issues = [];
 		for (var i=0;i<json.items.length;i++) {
 			var item = json.items[i];
-			var assigned = (item.assignees.length>0) ? item.assignees[0].login : "";
+			var assigned = toAssigned(item.assignees);
+			(item.assignees.length>0) ? item.assignees[0].login : "";
 			var labels = Repo.getLabels(item);
 			var issue = {
 				id:				item.number, 		// 番号
-				assigned_to:	{name:assigned}, 	// 担当者
+				assigned_to:	assigned, 	// 担当者
 				updated_on:		item.updated_at, 	// 更新日
 				done_ratio:		Repo.getProgress(item, labels), 	// 進捗
 				subject:		item.title,
@@ -290,6 +299,13 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 			}
 		}
 		TicketTray.setData(issues);
+	}
+	function toAssigned(assignees) {
+	    var assigned = [];
+	    for (var i=0;i<assignees.length; i++) {
+	        assigned.push({name:assignees[i].login, icon:assignees[i].avatar_url});
+	    }
+	    return assigned;
 	}
 	
 	//----------------------------------------------------------------

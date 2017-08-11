@@ -76,4 +76,8 @@ body > section
 	float: right;
 }
 
+.ExTableColumn > img {
+    height: 16px;
+}
+
 
