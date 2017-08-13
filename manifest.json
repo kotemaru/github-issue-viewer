@@ -13,7 +13,8 @@
 	},
 	"permissions": [
 		"webview","storage", "clipboardWrite",
-		"clipboardRead"
-	]
+		"clipboardRead",
+      {"fileSystem": ["write", "retainEntries", "directory"]}
+    ]
 }
 

@@ -101,6 +101,7 @@ function Repo(){}
 	}
 	_class.load = function() {
 		Storage.get("Repo", {owner:"", project:"", labelDefines:[]}, function(value){
+		    delete value.progress;
 			_class.settings = value;
 			convertLabelDefines();
 			console.log(JSON.stringify(value));

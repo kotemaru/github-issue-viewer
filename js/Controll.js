@@ -30,6 +30,7 @@ function Controll(){}
 				Repo.save();
 			});
 		},
+
 	};
 	
 	function bindButtons() {
@@ -42,7 +43,28 @@ function Controll(){}
 		bindButtons();
 		
 		$("#dialogPanel").on('click', ".CloseImg", function(){Dialog.close();});
-	
+        $("#dialogPanel").on('click', "#settingsDialogBackup", function() {
+            document.oncopy = function(event) {
+                var str = JSON.stringify(Repo.settings, null, 4);
+                event.clipboardData.setData("text/plain", str);
+                event.preventDefault();
+            };
+            document.execCommand("Copy", false, null);
+        });
+        $("#dialogPanel").on('click', "#settingsDialogRestore", function() {
+            document.onpaste = function(event) {
+                var backup = Repo.settings ;
+                try {
+                    Repo.settings = JSON.parse(event.clipboardData.getData("text/plain"));
+                    Dialog.open("#settingsDialog");
+                } catch (e) {
+                    console.log(e);
+                }
+                Repo.settings = backup;
+                event.preventDefault();
+            };
+            document.execCommand("Paste", false, null);
+        });
 		$(document).keydown(function(e) {
 			if (e.keyCode == 67 && e.ctrlKey) {
 				TicketTray.clipbordCopy();

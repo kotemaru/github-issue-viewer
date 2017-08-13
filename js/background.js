@@ -6,3 +6,21 @@ chrome.app.runtime.onLaunched.addListener(function() {
         }
     });
 });
+function settingsBackup(settings) {
+    //var content = zip.generate();
+    var zipName = 'download.zip';
+    //var dataURL = 'data:application/zip;base64,' + content;
+    var dataURL = window.webkitURL.createObjectURL(new Blob([settings]));
+    chrome.downloads.download({
+        url : dataURL,
+        filename : zipName,
+        saveAs : true
+    });
+}
+chrome.runtime.onMessage.addListener(function(msg, sender) {
+    console.log(msg);
+    if ((msg.action === 'settingsBackup')
+            && (msg.params !== undefined)) {
+        settingsBackup(msg.params);
+    }
+});
