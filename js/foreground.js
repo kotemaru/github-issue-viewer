@@ -26,10 +26,11 @@ $(function(){
 		BorderLayout.init({
 			header:{size:60, resizable:false},
 		}).load().refresh();
-		
+
+		MasterTable.load();
 		Controll.load();
 	}
-	setTimeout(init, 1000);
+	setTimeout(init, 500);
 
 });
 

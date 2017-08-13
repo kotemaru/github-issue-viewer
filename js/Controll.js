@@ -70,6 +70,25 @@ function Controll(){}
 				TicketTray.clipbordCopy();
 			}
 		});
+		
+
+        var elem = PulldownButton.makeElement("filter_tag", {
+            name : "タグ",
+            keySort : "name",
+            icon : "img/led24/tag_blue.png",
+            nameKey: "name",
+            values : Repo.getLabelDefines()
+        });
+		$("#filterButtons").append(elem);
+        var elem = PulldownButton.makeElement("filter_user", {
+            name : "タグ",
+            keySort : "name",
+            icon : "img/led24/user.png",
+            nameKey: "name",
+            values : MasterTable.getAll("user")
+        });
+        $("#filterButtons").append(elem);
+		
 	}
 
 })(Controll);

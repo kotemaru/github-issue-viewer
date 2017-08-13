@@ -26,7 +26,13 @@ function PulldownButton(){this.initialize.apply(this, arguments)};
 	Class.makeMenu = function($elem,opts) {
 		var $menu = $elem.find(".PopupMenu").html("");
 		var list = [];
-		for (var k in opts.values) list.push({id:k, name:opts.values[k]});
+		for (var k in opts.values) {
+		    if (opts.nameKey) {
+	        	list.push({id:k, name:opts.values[k][opts.nameKey]});
+		    } else {
+	        	list.push({id:k, name:opts.values[k]});
+		    }
+		}
 		if (opts.keySort == "name") {
 			list.sort(function(a,b){return a.name>b.name?1:-1;});
 		} else if (opts.keySort == "id") {
@@ -74,15 +80,15 @@ function PulldownButton(){this.initialize.apply(this, arguments)};
 	//-----------------------------------------------------
 	$(function(){
 		// PulldownButton
-		$(".PulldownButtonMark").bind("click", function(){
+		$(document.body).on("click", ".PulldownButtonMark", function(){
 			Class.popup(this.parentNode);
 			return false;
 		});
-		$(".PulldownButton").bind("click", function(){
+		$(document.body).on("click", ".PulldownButton", function(){
 			Class.onClick(this);
 			return false;
 		});
-		$(".PulldownButton .PopupMenuItem").bind("click", function(){
+		$(document.body).on("click", ".PulldownButton .PopupMenuItem", function(){
 			Class.onChange(this);
 			return false;
 		});

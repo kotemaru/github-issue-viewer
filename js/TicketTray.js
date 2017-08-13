@@ -298,7 +298,13 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 				subject:		item.title,
 				labels:			labels
 			};
-			if (labels["REJECT"] === undefined) {
+
+			var filterTagName = PulldownButton.getValue($("#filter_tag"));
+            var hasLabel = (labels["REJECT"] === undefined)
+                && (filterTagName == null || labels[filterTagName] != null);
+			var filterUserId = PulldownButton.getValue($("#filter_user"));
+
+			if (hasLabel && hasUser(filterUserId, assigned)) {
 				issues.push(issue);
 			}
 		}
@@ -308,10 +314,19 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	    var assigned = [];
 	    for (var i=0;i<assignees.length; i++) {
 	        var ass = assignees[i];
-	        assigned.push({id:ass.id, name:ass.login, icon:ass.avatar_url});
+	        var data = {id:ass.id, name:ass.login, icon:ass.avatar_url};
+	        assigned.push(data);
+	        MasterTable.put("user", ass.id, data);
 	    }
 	    return assigned;
 	}
+	function hasUser(filterUserId, assigned) {
+        if (filterUserId == null) return true;
+        for (var i = 0; i < assigned.length; i++) {
+            if (assigned[i].id == filterUserId) return true;
+        }
+        return false;
+    }
 	
 	//----------------------------------------------------------------
 	// 初期化

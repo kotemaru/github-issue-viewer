@@ -58,6 +58,9 @@ function Repo(){}
 		});
 	}
 
+	_class.getLabelDefines = function() {
+	    return labelDefines;
+    }
 
 	_class.getLabels = function(issue) {
 		var labels = {};
