@@ -76,7 +76,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		updated_on:	function(a,b){return compDate(a,b,"updated_on");},
 
 		done_ratio: function(a,b){return(a.done_ratio.progress-b.done_ratio.progress);},
-		label: 		function(a,b){return Repo.getLabelSortOrder(a.labels) - Repo.getLabelSortOrder(b.labels);},
+		label: 		function(a,b){return Settings.getLabelSortOrder(a.labels) - Settings.getLabelSortOrder(b.labels);},
 	};
 	function compId(a,b,key) {
 		var A = a[key]?a[key].id:-1;
@@ -295,12 +295,12 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 			var item = json.items[i];
 			var assigned = toAssigned(item.assignees);
 			(item.assignees.length>0) ? item.assignees[0].login : "";
-			var labels = Repo.getLabels(item);
+			var labels = Settings.getLabels(item);
 			var issue = {
 				id:				item.number, 		// 番号
 				assigned_to:	assigned, 	// 担当者
 				updated_on:		item.updated_at, 	// 更新日
-				done_ratio:		Repo.getProgress(item, labels), 	// 進捗
+				done_ratio:		Settings.getProgress(item, labels), 	// 進捗
 				subject:		item.title,
 				labels:			labels
 			};

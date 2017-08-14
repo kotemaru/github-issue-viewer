@@ -27,7 +27,7 @@ function Controll(){}
 		settingsButton: function(){
 			Dialog.show("#settingsDialog", function() {
 				Dialog.save();
-				Repo.save();
+				Settings.save();
 			});
 		},
 
@@ -45,7 +45,7 @@ function Controll(){}
 		$("#dialogPanel").on('click', ".CloseImg", function(){Dialog.close();});
         $("#dialogPanel").on('click', "#settingsDialogBackup", function() {
             document.oncopy = function(event) {
-                var str = JSON.stringify(Repo.settings, null, 4);
+                var str = JSON.stringify(Settings.info, null, 4);
                 event.clipboardData.setData("text/plain", str);
                 event.preventDefault();
             };
@@ -53,14 +53,14 @@ function Controll(){}
         });
         $("#dialogPanel").on('click', "#settingsDialogRestore", function() {
             document.onpaste = function(event) {
-                var backup = Repo.settings ;
+                var backup = Settings.info ;
                 try {
-                    Repo.settings = JSON.parse(event.clipboardData.getData("text/plain"));
+                    Settings.info = JSON.parse(event.clipboardData.getData("text/plain"));
                     Dialog.open("#settingsDialog");
                 } catch (e) {
                     console.log(e);
                 }
-                Repo.settings = backup;
+                Settings.info = backup;
                 event.preventDefault();
             };
             document.execCommand("Paste", false, null);
@@ -77,7 +77,7 @@ function Controll(){}
             keySort : "name",
             icon : "img/led24/tag_blue.png",
             nameKey: "name",
-            values : Repo.getLabelDefines()
+            values : Settings.getLabelDefines()
         });
 		$("#filterButtons").append(elem);
         var elem = PulldownButton.makeElement("filter_user", {
