@@ -231,10 +231,10 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		return selection;
 	}
 	_class.clearSelection = function() {
-		$(_TicketSelect).remove_class(TicketSelect);
+		$(_TicketSelect).removeClass(TicketSelect);
 	}
 	_class.addSelection = function(elem) {
-		$(elem).add_class(TicketSelect);
+		$(elem).addClass(TicketSelect);
 	}
 	_class.hasScrollBar = function() {
 		var tray =  $(_TICKET_TRAY+" "+_ExTableBody)[0];
@@ -266,7 +266,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 			var isClick = (200 > (new Date().getTime() - downTime));
 			if (isClick) {
 				if (!ev.ctrlKey) _class.clearSelection();
-				$(this).toggle_class(TicketSelect);
+				$(this).toggleClass(TicketSelect);
 				draggable = null;
 			}
 		}).on("dblclick",_TICKET,function(ev){

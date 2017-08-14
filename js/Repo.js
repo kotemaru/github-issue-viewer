@@ -51,7 +51,10 @@ function Repo(){}
 			}
 		});
 	}
-
+	_class.getGithubLink = function(id) {
+		return "https://github.com/"+getOwnerProject()+"/issues/"+id;
+	}
+	
 	_class.loadMilestone = loadMilestone;
 	_class.loadIssues = loadIssues;
 
