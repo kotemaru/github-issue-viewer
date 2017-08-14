@@ -81,7 +81,7 @@ function Controll(){}
         });
 		$("#filterButtons").append(elem);
         var elem = PulldownButton.makeElement("filter_user", {
-            name : "タグ",
+            name : "担当者",
             keySort : "name",
             icon : "img/led24/user.png",
             nameKey: "name",

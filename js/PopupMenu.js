@@ -49,13 +49,15 @@ function PopupMenu(){this.initialize.apply(this, arguments)};
 	}
 
 	$(function(){
-		$(".SelectableIcon").bind("click", function(){
+		$(document).on("click", ".SelectableIcon", function(){
 			PopupMenu.makeIconMenu("#iconSelectMenu", "icons.txt")
 			PopupMenu.open("#iconSelectMenu", {element: this});
 		});
-		$("#iconSelectMenu>.PopupMenuItem").bind("click", function(){
+		$(document).on("click","#iconSelectMenu>.PopupMenuItem", function(){
 			$img = $(PopupMenu.options.element);
-			$img.attr("src", this.src);
+			var parser = document.createElement('a');
+            parser.href = this.src;
+			$img.attr("src", parser.pathname);
 			PopupMenu.close("#iconSelectMenu");
 		});
 		$(document.body).bind("click", function(){

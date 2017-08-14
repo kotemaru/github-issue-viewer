@@ -22,14 +22,14 @@ function Balloon(){this.initialize.apply(this, arguments)};
 
 	$(function(){
 		
-		$("*[alt]").bind("mouseover",function(ev){
+		$(document).on("mouseover","*[alt]",function(ev){
 			Class.popupBalloon($(this), "alt");
-		}).bind("mouseout",function(){
+		}).on("mouseout","*[alt]",function(){
 			Class.hideBalloon();
 		});
-		$("*[data-alt]").bind("mouseover",function(ev){
+		$(document).on("mouseover","*[data-alt]",function(ev){
 			Class.popupBalloon($(this), "data-alt");
-		}).bind("mouseout",function(){
+		}).on("mouseout","*[data-alt]",function(){
 			Class.hideBalloon();
 		});
 

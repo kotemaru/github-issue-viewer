@@ -22,14 +22,19 @@
 	background-color: white;
 }
 
-
+.RateBarParent {
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+    display: inline-block;
+}
 .RateBar {
-	vertical-align: middole;
+	vertical-align: top;
 	display: inline-block;
 	width: 22px;
 	height: 12px;
 	border: 1px solid lightgray;
-	margin-bottom: -2px;
+	margin-top: 2px;
 	overflow: hidden;
 }
 .RateBar > span{
@@ -38,6 +43,9 @@
 	display: inline-block;
 	width: 0px;
 	height: 12px;
+}
+.RateBar > img{
+    width: 16px;
 }
 /*------------------------------*/
 .ExTableHeader {

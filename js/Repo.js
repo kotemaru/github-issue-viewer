@@ -73,15 +73,15 @@ function Repo(){}
 		return labels;
 	}
 	_class.getProgress = function(issue, labels) {
-		if (issue.state == "closed") return 100;
+		if (issue.state == "closed") return {progress:100};
 		if (labels == null) labels = Repo.getLabels(issue);
 
 		for (var key in labels) {
 		    if (labels[key] && labels[key].progress && !isNaN(+labels[key].progress)) {
-		        return +labels[key].progress;
+		        return labels[key];
 		    }
 		}
-		return 0;
+		return {progress:0};
 	}
 	_class.getLabelSortOrder = function(labels) {
         var max = 0;

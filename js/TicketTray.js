@@ -38,16 +38,22 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		updated_on:	function($elem,issue) {$elem.html(toYYMMDD(issue.updated_on));},
 
 		done_ratio: function($elem,issue) {
-			$elem.html("<div class='RateBar'><span></span></div>");
-			$elem.find(">div>span").css("width",issue.done_ratio+"%");
+			$elem.html("<div class='RateBarParent'><div class='RateBar'><span></span></div></div>");
+			$elem.find(">div>div>span").css("width",issue.done_ratio.progress+"%");
+			//if (issue.done_ratio.icon && issue.done_ratio.icon != "") {
+			var src = (issue.done_ratio.icon && issue.done_ratio.icon != "")
+			    ?issue.done_ratio.icon : "img/space.png";
+		    $elem.find(">div").prepend("<img width='16' src='"+src+"'/>");
+			//}
 		},
 		label:		function($elem,issue) {
 			//console.log("label bug:",issue.labels.indexOf("bug"), issue.labels, );
 			$elem.html("");
 			for (var key in issue.labels) {
-			    if (issue.labels[key].icon && issue.labels[key].icon != "") {
-                    $elem.append("<img src='"+issue.labels[key].icon+"'/>");
-			    }
+                if (issue.labels[key].icon && issue.labels[key].icon != ""
+                        && (issue.labels[key].progress == null || issue.labels[key].progress == "")) {
+                    $elem.append("<img src='" + issue.labels[key].icon + "'/>");
+                }
 			}
 		},
 
@@ -69,7 +75,7 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		due_date:	function(a,b){return compDate(a,b,"due_date");},
 		updated_on:	function(a,b){return compDate(a,b,"updated_on");},
 
-		done_ratio: function(a,b){return(a.done_ratio-b.done_ratio);},
+		done_ratio: function(a,b){return(a.done_ratio.progress-b.done_ratio.progress);},
 		label: 		function(a,b){return Repo.getLabelSortOrder(a.labels) - Repo.getLabelSortOrder(b.labels);},
 	};
 	function compId(a,b,key) {
@@ -92,15 +98,15 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 	var COLUMN_METAS =[
 		{title:"番号",   		width:36, setter:SETTERS.id, comparator:COMPS.id,		style:{textAlign:"right"}},
 //		{title:"プロジェクト", 	width:80, setter:SETTERS.project, 	 comparator:COMPS.project },
-		{title:"タグ", 			width:32, setter:SETTERS.label,	 	 comparator:COMPS.label },
-//		{title:"トラッカー",	width:70, setter:SETTERS.tracker, 	 comparator:COMPS.tracker },
+		{title:"タグ", 			width:56, setter:SETTERS.label,	 	 comparator:COMPS.label },
+//		{title:"トラッカー", 	width:70, setter:SETTERS.tracker, 	 comparator:COMPS.tracker },
 //		{title:"優先度", 		width:48, setter:SETTERS.priority, 	 comparator:COMPS.priority },
 		{title:"担当者", 		width:97, setter:SETTERS.assigned_to, comparator:COMPS.assigned_to },
 //		{title:"作成者", 		width:97, setter:SETTERS.author,     comparator:COMPS.author },
-		{title:"更新日",		width:54, setter:SETTERS.updated_on, comparator:COMPS.updated_on },
+		{title:"更新日",		    width:54, setter:SETTERS.updated_on, comparator:COMPS.updated_on },
 //		{title:"開始日", 		width:54, setter:SETTERS.start_date, comparator:COMPS.start_date },
 //		{title:"期日", 			width:54, setter:SETTERS.due_date, 	 comparator:COMPS.due_date },
-		{title:"進捗", 			width:28, setter:SETTERS.done_ratio, comparator:COMPS.done_ratio },
+		{title:"進捗", 			width:44, setter:SETTERS.done_ratio, comparator:COMPS.done_ratio },
 		{title:"題名",   		width:"100%",  setter:SETTERS.subject, comparator:COMPS.subject, style:{whiteSpace:"normal", height:"auto"}}
 	];
 

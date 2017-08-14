@@ -124,7 +124,10 @@ img#redmineCustomImg {
 	text-align: right;
 }
 
-
+#progressSettingTable img.SelectableIcon {
+    width: 16px;
+    height: 16px;
+}
 
 
 
