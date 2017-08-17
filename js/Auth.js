@@ -4,7 +4,12 @@ function Auth(){}
 
 (function(_class){
 	var AUTH_TOKEN = "AUTH_TOKEN";
-	var NOTE = "github-issue-viewer";
+	var NOTE = "github-issue-viewer-";
+	_class.terminal = "Desktop";
+
+	function getNote() {
+		return NOTE + Settings.info.terminal;
+	}
 
 	function isLogin() {
 		return _class.token != null;
@@ -38,7 +43,7 @@ function Auth(){}
 			    xhr.setRequestHeader("Authorization", "Basic " + credentials);
 			},
 			contentType:"application/json; charset=utf-8",
-			data: JSON.stringify({"scopes":["repo"],"note":NOTE}),
+			data: JSON.stringify({"scopes":["repo"],"note":getNote()}),
 			dataType: "json",
 			success: function(json) {
 				setAuthToken(json.token);
@@ -62,7 +67,7 @@ function Auth(){}
 				var id = -1;
 				for (var i=0;i<json.length;i++) {
 					var auth = json[i];
-					if (auth.note == NOTE) id = auth.id;
+					if (auth.note == getNote()) id = auth.id;
 				}
 				if (id >= 0) {
 					deleteAuth(user, pass, onSuccess, onFail, id);
