@@ -36,7 +36,11 @@ function Repo(){}
 	function loadIssues(milestone, onload) {
 		var q = getIssueQuery();
 		if (milestone != "" && milestone != "*") {
-			q = q+"+milestone:\""+milestone+"\"";
+			if (milestone == "-") {
+				q = q+"+no:milestone";
+			} else {
+				q = q+"+milestone:\""+milestone+"\"";
+			}
 		}
 		$.ajax({
 			type: "GET", url:"https://api.github.com/search/issues?q="+q+"&sort=updated&page=1&per_page=100",

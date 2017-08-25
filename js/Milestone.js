@@ -19,7 +19,7 @@ function Milestone(){}
 	_class.apply = function() {
 		var milestones = _class.settings.milesotones;
 		var $sel = $("#milestoneSelector");
-		$sel.html("<option value='*'>-- 全てのマイルストーン --</option>");
+		$sel.html("<option value='*'>-- 全てのマイルストーン --</option><option value='-'>--   マイルストーン無し   --</option>");
 		for (var id in milestones) {
 			var item = milestones[id];
 			$sel.append($("<option value='"+item.title+"'>"+item.title+"</option>"));
