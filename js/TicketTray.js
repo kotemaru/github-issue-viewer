@@ -75,7 +75,10 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 		due_date:	function(a,b){return compDate(a,b,"due_date");},
 		updated_on:	function(a,b){return compDate(a,b,"updated_on");},
 
-		done_ratio: function(a,b){return(a.done_ratio.progress-b.done_ratio.progress);},
+		done_ratio: function(a,b){
+			var diff = a.done_ratio.progress-b.done_ratio.progress;
+			return diff == 0 ? COMPS.label(a, b): diff;
+		},
 		label: 		function(a,b){return Settings.getLabelSortOrder(a.labels) - Settings.getLabelSortOrder(b.labels);},
 	};
 	function compId(a,b,key) {

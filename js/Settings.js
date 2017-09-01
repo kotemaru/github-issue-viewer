@@ -36,14 +36,15 @@ function Settings(){}
 		return {progress:0};
 	}
 	_class.getLabelSortOrder = function(labels) {
-        var max = 0;
+        var sum = 0;
         for ( var key in labels) {
             if (labels[key] && labels[key].sort && !isNaN(+labels[key].sort)) {
-                max = Math.max(max, +labels[key].sort);
+                sum = sum +labels[key].sort;
             }
         }
-        return max;
+        return sum;
     }
+
 
 	_class.save = function() {
 		Storage.put("Settings", _class.info);
