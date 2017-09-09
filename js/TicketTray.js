@@ -305,15 +305,17 @@ function TicketTray(){this.initialize.apply(this, arguments)};
 				updated_on:		item.updated_at, 	// 更新日
 				done_ratio:		Settings.getProgress(item, labels), 	// 進捗
 				subject:		item.title,
-				labels:			labels
+				labels:			labels,
+				state:			item.state
 			};
 
 			var filterTagName = PulldownButton.getValue($("#filter_tag"));
             var hasLabel = (labels["REJECT"] === undefined)
                 && (filterTagName == null || labels[filterTagName] != null);
 			var filterUserId = PulldownButton.getValue($("#filter_user"));
+            var isClosed = (issue.state == "closed" && !CheckButton.isChecked($("#closedTicket")));
 
-			if (hasLabel && hasUser(filterUserId, assigned)) {
+			if (hasLabel && hasUser(filterUserId, assigned) && !isClosed) {
 				issues.push(issue);
 			}
 		}
