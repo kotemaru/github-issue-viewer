@@ -56,6 +56,7 @@ function PulldownButton(){this.initialize.apply(this, arguments)};
 		if (val) {
 			$elem.removeClass("PulldownButtonOn");
 			$elem.data("value",null);
+		    $elem.trigger("change");
 		} else {
 			Class.popup(elem);
 		}
@@ -75,6 +76,7 @@ function PulldownButton(){this.initialize.apply(this, arguments)};
 			$elem.removeClass("PulldownButtonOn");
 		}
 		PopupMenu.close();
+		$elem.trigger("change");
 	}
 
 	//-----------------------------------------------------

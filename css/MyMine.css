@@ -75,9 +75,30 @@ body > section
 #loginButton, #settingsButton {
 	float: right;
 }
+#waffleButton {
+	float: left;
+}
 
 .ExTableColumn > img {
     height: 16px;
 }
 
+#webviewTray {
+	width:100%;
+	height:100%;
+	position: relative;
+}
 
+.Webview {
+    display: block;
+	position: absolute;
+	top: 0;
+	box-sizing: border-box;
+	padding-top: 0px;
+
+	width:100%;
+	height:100%;
+	border: 0px;
+	overflow: hidden;
+	background: #ffffff;
+}

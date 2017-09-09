@@ -19,7 +19,14 @@ function Controll(){}
 		},
 		issuesButton: function(){
 			var $sel = $("#milestoneSelector");
-			Repo.loadIssues($sel.val(), TicketTray.onLoadIssue);
+		    if (CheckButton.isChecked($("#waffleButton"))) {
+   		        $("#webview").attr("src",Repo.getWaffleUrl($sel.val(),
+       		        PulldownButton.getValue($("#filter_user")),
+   		            PulldownButton.getValue($("#filter_tag"))
+   		            ));
+             } else {
+  			    Repo.loadIssues($sel.val(), TicketTray.onLoadIssue);
+            }
 		},
 		milestoneButton: function(){
 			Repo.loadMilestone(Milestone.onLoadMilestones);
@@ -30,7 +37,16 @@ function Controll(){}
 				Settings.save();
 			});
 		},
-
+		waffleButton: function(){
+		    if (CheckButton.isChecked($("#waffleButton"))) {
+		        $("#webviewTray").show();
+		        $("#ticketTray").hide();
+                BUTTON_ACTIONS.issuesButton();
+		    } else {
+		        $("#webviewTray").hide();
+		        $("#ticketTray").show();
+		    }
+		},
 	};
 	
 	function bindButtons() {
@@ -72,23 +88,27 @@ function Controll(){}
 		});
 		
 
-        var elem = PulldownButton.makeElement("filter_tag", {
+        var $elem = PulldownButton.makeElement("filter_tag", {
             name : "タグ",
             keySort : "name",
             icon : "img/led24/tag_blue.png",
             nameKey: "name",
             values : Settings.getLabelDefines()
         });
-		$("#filterButtons").append(elem);
-        var elem = PulldownButton.makeElement("filter_user", {
+        $elem.bind('change', function(){BUTTON_ACTIONS.issuesButton();});
+		$("#filterButtons").append($elem);
+        var $elem = PulldownButton.makeElement("filter_user", {
             name : "担当者",
             keySort : "name",
             icon : "img/led24/user.png",
             nameKey: "name",
             values : MasterTable.getAll("user")
         });
-        $("#filterButtons").append(elem);
-		
+        $elem.bind('change', function(){BUTTON_ACTIONS.issuesButton();});
+        $("#filterButtons").append($elem);
+
+		$("#milestoneSelector").bind('change', function(){BUTTON_ACTIONS.issuesButton();});
+
 	}
 
 })(Controll);

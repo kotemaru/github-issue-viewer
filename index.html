@@ -43,7 +43,10 @@
 	<!-- ========= Main Panel =========================================== -->
 	<section class="BorderLayoutMain">
 		<div id="ticketTray" class="ExTable"></div>
-	</section>
+        <div id="webviewTray">
+            <webview id="webview" class="Webview"  src="" partition="persist:googlepluswidgets"></webview>
+        </div>
+    </section>
 
 	<!-- ========= Left Side Panel =========================================== -->
 	<section class="BorderLayoutLeft">
@@ -74,6 +77,7 @@
 			alt="MyMineについて"/>
 		<div id="buttons">
             <div>
+                <img id="waffleButton" class="CheckButton" src="/img/led24/application_view_tile.png" alt="Waffle"/>
                 <select id="milestoneSelector" ></select>
                 <img id="milestoneButton" class="Button" src="img/led24/flag_blue.png" alt="マイルストーン更新"/>
                 <img id="issuesButton" class="Button" src="img/led24/page_refresh.png" alt="チケット更新"/>
