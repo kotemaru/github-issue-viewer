@@ -13,6 +13,13 @@ function MasterTable(){this.initialize.apply(this, arguments)};
 	Class.getAll = function(name) {
         return masterTable[name];
 	}
+	Class.get = function(name, id) {
+		var table = Class.getAll(name);
+		if (table == null) return null;
+		return table[id];
+	}
+	
+	
 	Class.each = function(name, callback) {
 
 	}

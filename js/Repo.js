@@ -65,13 +65,14 @@ function Repo(){}
 	_class.openIssue = function(id) {
 		window.open(getGithubLink(id), "_blank");
 	}
-	_class.getWaffleUrl = function(milestone, user, label) {
+	_class.getWaffleUrl = function(milestone, userId, label) {
 	    var q = "?milestone=";
 	    if (milestone == "*") milestone = "";
 	    if (milestone == "-") milestone = "none";
 	    q += milestone;
 	    if (label != null) q += "&label="+label;
-	    if (user != null) q += "&assigned="+user;
+	    var user = MasterTable.get("user", userId);
+	    if (user != null) q += "&assigned="+user.name;
 
 	    var url = "https://waffle.io/" + getOwnerProject() + q;
 	    console.log("getWaffleUrl", url);
