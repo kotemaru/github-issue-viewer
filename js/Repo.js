@@ -67,8 +67,9 @@ function Repo(){}
 	}
 	_class.getWaffleUrl = function(milestone, user, label) {
 	    var q = "?milestone=";
-	    if (milestone == "*") q += "";
-	    if (milestone == "-") q += "none";
+	    if (milestone == "*") milestone = "";
+	    if (milestone == "-") milestone = "none";
+	    q += milestone;
 	    if (label != null) q += "&label="+label;
 	    if (user != null) q += "&assigned="+user;
 
